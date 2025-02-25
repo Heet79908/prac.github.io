@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polars: The High-Speed DataFrame Library</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            background-color: lightblue;
+            color: #222;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(to right, #003366, #0066cc);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            width: 85%;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+        h2 {
+            color: #003366;
+            border-bottom: 3px solid #0066cc;
+            padding-bottom: 8px;
+            font-family: 'Arial', sans-serif;
+        }
+        h3 {
+            color: #003366;
+            font-size: 19px;
+        }
+        pre {
+            background: #282c34;
+            color: #ffffff;
+            padding: 12px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+        }
+        p {
+            text-align: justify;
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #003366;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #003366;
+            color: white;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: pink;
+            color: white;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>Polars: The High-Speed DataFrame Library</header>
+    
+    <div class="container">
+        <h2>Introduction</h2>
+        <p>Polars is a powerful DataFrame library designed for high-speed data manipulation and analysis. It is built on the <b>Rust programming language</b>, providing a highly efficient alternative to traditional tools like Pandas. Due to its multi-threading capabilities and lazy evaluation, Polars significantly improves performance when handling large datasets.</p>
+
+        <p><b>Why choose Polars?</b></p>
+        <ul>
+            <li>Efficiently processes large datasets without high memory consumption.</li>
+            <li>Leverages multi-threading for faster computations.</li>
+            <li>Supports lazy execution for optimized query processing.</li>
+            <li>Compatible with popular formats like CSV, JSON, and Parquet.</li>
+        </ul>
+
+        <h2>Installation & Setup</h2>
+        <h3>Installing Polars in Python</h3>
+        <p>To install the Polars library in a Python environment, run:</p>
+        <pre><code>pip install polars</code></pre>
+        <p>To include dependencies for handling multiple data formats, install:</p>
+        <pre><code>pip install polars[all]</code></pre>
+
+        <h3>Installing Polars in Rust</h3>
+        <p>For Rust users, add Polars as a dependency in the <b>Cargo.toml</b> file:</p>
+        <pre><code>[dependencies]
+polars = "0.38.0"</code></pre>
+
+        <h2>Key Features</h2>
+        <h3>1. High Performance</h3>
+        <p>Polars is designed for speed, using Rust’s memory safety and concurrency features to outperform traditional libraries. Its efficient data structures and parallel execution model allow it to process massive datasets much faster than Pandas, making it ideal for real-time analytics, financial modeling, and machine learning workflows.</p>
+
+        <h3>2. Lazy Execution</h3>
+        <p>Instead of executing operations immediately, Polars builds a query plan and executes it only when needed. This lazy evaluation reduces unnecessary computations, optimizes query execution, and speeds up workflows, especially when working with large datasets, making it significantly more efficient than eager execution-based libraries like Pandas.</p>
+
+        <h3>3. Multi-threading</h3>
+        <p>Polars leverages Rust’s multi-threading capabilities, allowing computations to run in parallel across multiple CPU cores. This ensures that even complex operations, such as aggregations and joins, are executed efficiently. Unlike Pandas, which runs on a single thread, Polars automatically optimizes resource usage for faster data processing.</p>
+
+        <h3>4. Memory Efficiency</h3>
+        <p>Polars is optimized for handling large datasets without excessive memory usage. Its columnar data storage format ensures that only the necessary columns are loaded into memory, reducing overall footprint. This makes Polars a great choice for cloud-based applications and environments where memory is a constraint.</p>
+
+        <h3>5. Heterogeneous Column Handling</h3>
+        <p>Unlike many other DataFrame libraries, Polars efficiently manages heterogeneous columns, allowing different data types within the same DataFrame. It seamlessly supports operations on mixed-type data without performance degradation, making it particularly useful for handling real-world datasets that contain numeric, string, and categorical data together.</p>
+
+        <h3>6. Wide File Format Support</h3>
+        <p>Polars natively supports various data formats, including CSV, JSON, Parquet, and Arrow. This makes it highly versatile for data ingestion, whether from local storage, cloud services, or big data pipelines. With built-in read and write functionalities, it seamlessly integrates with modern data engineering workflows.</p>
+
+        <h3>7. SQL-like Querying</h3>
+        <p>With an intuitive API similar to SQL, Polars makes data manipulation easy for those familiar with database queries. Users can filter, group, join, and aggregate data efficiently using simple syntax, eliminating the need for complex procedural coding when handling large datasets.</p>
+
+
+        <h2>Code Examples</h2>
+        <h3>Creating a DataFrame</h3>
+        <pre><code>import polars as pl
+
+df = pl.DataFrame({
+    "Name": ["Kirmada", "Vinni", "HamBurger"],
+    "Job": ["CEO","Slave","Edible"]
+    "Salary": [100000000,5000, 20]
+})
+
+print(df)</code></pre>
+
+        <h3>Filtering Data</h3>
+        <pre><code>filtered_df = df.filter(pl.col("Age") > 28)
+print(filtered_df)</code></pre>
+
+        <h3>Grouping & Aggregating</h3>
+        <pre><code>df.groupby("Age").agg(pl.col("Salary").sum())</code></pre>
+
+        <h3>Reading & Writing Data</h3>
+        <pre><code>df = pl.read_csv("data.csv")
+df.write_parquet("output.parquet")</code></pre>
+        
+                <h3>Example 1: Analyzing Stress Levels in Students</h3>
+        <p>This example explores stress levels among students based on study hours and exams. We categorize stress into <b>Low</b>, <b>Moderate</b>, and <b>High</b> levels and analyze the impact of study time.</p>
+        <pre><code>import polars as pl
+
+# Load student stress dataset
+df = pl.read_csv("student_stress.csv")
+
+# Categorize stress levels
+df = df.with_columns(
+    pl.when(pl.col("Stress Score") < 4).then("Low")
+    .when(pl.col("Stress Score") < 7).then("Moderate")
+    .otherwise("High")
+    .alias("Stress Level")
+)
+
+# Compute average stress score per study hour
+avg_stress = df.groupby("Study Hours").agg(pl.col("Stress Score").mean())
+
+# Display results
+print(df)
+print(avg_stress)</code></pre>
+
+        <h3>Example 2: Relating Suicide Rates to Stress Levels</h3>
+        <p>Here, we analyze how stress levels impact suicide rates across different age groups. We use statistical correlation to find patterns in mental health data.</p>
+        <pre><code>import polars as pl
+
+# Load dataset containing suicide rates and stress levels
+df = pl.read_csv("suicide_stress_data.csv")
+
+# Convert age groups to categorical data
+df = df.with_columns(pl.col("Age Group").cast(pl.Categorical))
+
+# Calculate average suicide rate per stress level
+suicide_trend = df.groupby("Stress Level").agg(pl.col("Suicide Rate").mean())
+
+# Compute correlation between stress and suicide rates
+correlation = df.select(pl.corr("Stress Score", "Suicide Rate"))
+
+# Display results
+print(suicide_trend)
+print(correlation)</code></pre>
+
+        <h2>Explaining using Screenshots</h2>
+        <h3>Creating a Polars DataFrame</h3>
+        <p>The code initializes a Polars DataFrame using a dictionary with different data types, including integers, floats, and strings.
+It then converts this dictionary into a Polars DataFrame and displays it.</p>
+        <img src="i4.jpg" alt="Description" >
+        <h3>Performing Operations on Data</h3>
+        <p>Two new columns are added:
+Age_in_months: Converts the age values from years to months by multiplying by 12.
+Status_Updated: Modifies the "Status" column by appending " - Active" to each value.</p>
+        <img src="i3.jpg" alt="Description" >
+        <h3>Filtering Data Based on Multiple Conditions</h3>
+        <p>The code filters rows where:
+The "Height" column is greater than 5.8.
+The "Status" column is "Single".
+This results in a smaller DataFrame containing only rows that meet both conditions.</p>
+        <img src="i2.jpg" alt="Description" >
+        <h3> Comparing Pandas vs Polars Performance</h3>
+        <p>A dataset with 10 million rows is generated using NumPy and tested with both Pandas and Polars.
+The dataset contains names, ages, cities, and salaries.
+Each library sorts the dataset based on the "Salary" column and calculates a 10% salary increase.</p>
+        <img src="i1.jpg" alt="Description" >
+        <h3>Performance Results</h3>
+        <p>Pandas Execution Time: ~21.71 seconds.
+Polars Execution Time: ~12.65 seconds.
+Conclusion: Polars performs significantly faster than Pandas, making it more efficient for large datasets.</p>
+
+        
+        
+
+
+        <h2>Use Cases</h2>
+        <p>Polars is widely used in various domains:</p>
+        <h3>1. Big Data Analytics</h3>
+        <p>Polars is used to process vast amounts of data efficiently. It is ideal for applications such as customer segmentation, real-time event monitoring, and fraud detection.</p>
+
+        <h3>2. Financial & Stock Market Analysis</h3>
+        <p>Financial analysts and hedge funds use Polars for time-series analysis, portfolio optimization, and stock market predictions, benefiting from its low latency and fast computations.</p>
+
+        <h3>3. Machine Learning & Data Preprocessing</h3>
+        <p>Polars accelerates machine learning workflows by enabling rapid feature engineering, missing value imputation, and normalization, making it a valuable tool for data scientists.</p>
+
+        <h3>4. Web Scraping & Data Extraction</h3>
+        <p>Polars efficiently processes large volumes of scraped data from websites, allowing quick filtering, transformation, and storage for further analysis.</p>
+
+        <h3>5. Scientific & Research Applications</h3>
+        <p>Researchers working with massive datasets in fields like genomics, climate science, and epidemiology use Polars to perform high-speed statistical analysis.</p>
+
+
+        <h2>Comparison: Polars vs Pandas</h2>
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>Pandas</th>
+                <th>Polars</th>
+            </tr>
+            <tr>
+                <td>Language</td>
+                <td>Python (C-based)</td>
+                <td>Rust (Python API)</td>
+            </tr>
+            <tr>
+                <td>Execution Model</td>
+                <td>Row-wise, immediate execution</td>
+                <td>Columnar, lazy execution</td>
+            </tr>
+            <tr>
+                <td>Performance</td>
+                <td>Single-threaded</td>
+                <td>Multi-threaded (faster)</td>
+            </tr>
+            <tr>
+                <td>Memory Usage</td>
+                <td>Higher</td>
+                <td>Lower</td>
+            </tr>
+        </table>
+
+         <h2>Conclusion</h2>
+        <p>Polars is a game changer when it comes to data manipulation. Its performance, efficiency, and capacity to work with huge datasets make it a priceless asset for data scientists, analysts, and engineers. While Pandas can get bogged down with big data, Polars is still lightning-fast because of its multi threading and lazy execution. In my opinion, its ease of use and performance make it a tool that everyone who works with data should know. It's like a breath of fresh air new, streamlined, and designed for the data demands of today. If you want to accelerate your workflows, Polars is worth checking out. </p>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <h3>1. Why use Polars instead of Pandas?</h3>
+        <p>Polars is designed for <b>high-performance data processing</b>, leveraging <b>multi-threading</b> and <b>lazy execution</b> to optimize computations. It is significantly faster than Pandas, especially for large datasets, and has lower memory usage.</p>
+
+        <h3>2. Can Polars handle heterogeneous data types?</h3>
+        <p>Yes! Polars efficiently manages <b>heterogeneous columns</b>, allowing mixed data types in a single DataFrame while maintaining <b>high-speed operations</b>. This makes it ideal for real-world datasets with diverse data formats.</p>
+
+        <h3>3. Does Polars support real-time data processing?</h3>
+        <p>Absolutely! Polars excels in <b>real-time analytics</b> due to its fast execution model. It is particularly useful for streaming applications, financial modeling, and sensor data analysis.</p>
+
+        <h3>4. What file formats can Polars read and write?</h3>
+        <p>Polars supports multiple file formats, including <b>CSV, JSON, Parquet, and IPC/Feather</b>. Its file handling is optimized for both small and large-scale datasets.</p>
+
+        <h3>5. Is Polars beginner-friendly?</h3>
+        <p>Polars has a straightforward syntax, similar to Pandas, making it easy for beginners to learn. However, it also offers <b>advanced features</b> like lazy execution and SQL-like queries, making it suitable for professionals handling large datasets.</p>
+
+        <h2>References & Further Reading</h2>
+        <ul>
+            <li><a href="https://pola.rs/">Polars Official Website</a></li>
+            <li><a href="https://github.com/pola-rs/polars">Polars GitHub Repository</a></li>
+        </ul>
+    </div>
+    <footer>
+        <div class="footer-content" style="text-align: center;">
+           <p>&copy; 2025 Polars: The High-Speed DataFrame Library. All rights reserved.</p>
+            <nav class="footer-nav">
+                <ul>
+                    <a href="https://pola.rs/about-us/">About</a>
+                    |
+                    <a href="#">Video</a>
+                    |
+                    <a href="https://github.com/Heet79908/polars-exposition-assignment">GitHub</a>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>
